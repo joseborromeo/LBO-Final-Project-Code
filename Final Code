@@ -1,0 +1,194 @@
+classdef lbo < matlab.apps.AppBase
+
+    % Properties that correspond to app components
+    properties (Access = public)
+        UIFigure               matlab.ui.Figure
+        GraphLabel             matlab.ui.control.Label
+        sinpi2xcosxButton      matlab.ui.control.Button
+        cosx2picosxButton      matlab.ui.control.Button
+        cos2xcosx2sinx2Button  matlab.ui.control.Button
+        sinx2pisinxButton      matlab.ui.control.Button
+        sinxcosxsin2xButton    matlab.ui.control.Button
+        SelectFunctionLabel    matlab.ui.control.Label
+        sinx2cosx21Button      matlab.ui.control.Button
+        TrigonometricIdentityGraphingCalculatorLabel  matlab.ui.control.Label
+        UIAxes                 matlab.ui.control.UIAxes
+    end
+
+    % Callbacks that handle component events
+    methods (Access = private)
+
+        % Button pushed function: sinx2cosx21Button
+        function sinx2cosx21ButtonPushed(app, event)
+            x=1:0.01:4*pi;
+            y=(sin(x).^2)+(cos(x).^2);
+            plot(app.UIAxes,x,y);
+        end
+
+        % Button pushed function: sinxcosxsin2xButton
+        function sinxcosxsin2xButtonPushed(app, event)
+            x=1:0.01:4*pi;
+            y=(2*sin(x).*cos(x));
+            plot(app.UIAxes,x,y);
+        end
+
+        % Button pushed function: sinx2pisinxButton
+        function sinx2pisinxButtonPushed(app, event)
+           x=1:0.01:4*pi;
+           y=(sin(x+(2*pi)));
+           plot(app.UIAxes,x,y); 
+        end
+
+        % Button pushed function: cos2xcosx2sinx2Button
+        function cos2xcosx2sinx2ButtonPushed(app, event)
+           x=1:0.01:4*pi;
+           y=(cos(2*x));
+           plot(app.UIAxes,x,y);  
+        end
+
+        % Button pushed function: cosx2picosxButton
+        function cosx2picosxButtonPushed(app, event)
+           x=1:0.01:4*pi;
+           y=(cos(x+(2*pi)));
+           plot(app.UIAxes,x,y); 
+        end
+
+        % Button pushed function: sinpi2xcosxButton
+        function sinpi2xcosxButtonPushed(app, event)
+           x=1:0.01:4*pi;
+           y=(cos(x));
+           plot(app.UIAxes,x,y);  
+        end
+    end
+
+    % Component initialization
+    methods (Access = private)
+
+        % Create UIFigure and components
+        function createComponents(app)
+
+            % Create UIFigure and hide until all components are created
+            app.UIFigure = uifigure('Visible', 'off');
+            app.UIFigure.Color = [0 0.4471 0.7412];
+            app.UIFigure.Position = [100 100 640 480];
+            app.UIFigure.Name = 'MATLAB App';
+
+            % Create UIAxes
+            app.UIAxes = uiaxes(app.UIFigure);
+            xlabel(app.UIAxes, 'X')
+            ylabel(app.UIAxes, 'Y')
+            zlabel(app.UIAxes, 'Z')
+            app.UIAxes.FontWeight = 'bold';
+            app.UIAxes.XColor = [1 1 1];
+            app.UIAxes.XTick = [0 5 10 15 20];
+            app.UIAxes.XTickLabel = {'0'; '5'; '10'; '15'; '20'};
+            app.UIAxes.YColor = [1 1 1];
+            app.UIAxes.YTick = [0 5 10 15 20];
+            app.UIAxes.YTickLabel = {'0'; '5'; '10'; '15'; '20'};
+            app.UIAxes.ZColor = [1 1 1];
+            app.UIAxes.ZTick = [0 5 10 15 20];
+            app.UIAxes.Position = [155 1 300 185];
+
+            % Create TrigonometricIdentityGraphingCalculatorLabel
+            app.TrigonometricIdentityGraphingCalculatorLabel = uilabel(app.UIFigure);
+            app.TrigonometricIdentityGraphingCalculatorLabel.HorizontalAlignment = 'center';
+            app.TrigonometricIdentityGraphingCalculatorLabel.FontSize = 30;
+            app.TrigonometricIdentityGraphingCalculatorLabel.FontWeight = 'bold';
+            app.TrigonometricIdentityGraphingCalculatorLabel.FontColor = [1 1 1];
+            app.TrigonometricIdentityGraphingCalculatorLabel.Position = [155 389 333 74];
+            app.TrigonometricIdentityGraphingCalculatorLabel.Text = {'Trigonometric Identity '; 'Graphing Calculator'};
+
+            % Create sinx2cosx21Button
+            app.sinx2cosx21Button = uibutton(app.UIFigure, 'push');
+            app.sinx2cosx21Button.ButtonPushedFcn = createCallbackFcn(app, @sinx2cosx21ButtonPushed, true);
+            app.sinx2cosx21Button.BackgroundColor = [1 1 1];
+            app.sinx2cosx21Button.FontWeight = 'bold';
+            app.sinx2cosx21Button.Position = [25 306 135 23];
+            app.sinx2cosx21Button.Text = 'sin(x)^2+cos(x)^2 = 1';
+
+            % Create SelectFunctionLabel
+            app.SelectFunctionLabel = uilabel(app.UIFigure);
+            app.SelectFunctionLabel.FontSize = 20;
+            app.SelectFunctionLabel.FontWeight = 'bold';
+            app.SelectFunctionLabel.FontColor = [1 1 1];
+            app.SelectFunctionLabel.Position = [245 347 154 27];
+            app.SelectFunctionLabel.Text = 'Select Function';
+
+            % Create sinxcosxsin2xButton
+            app.sinxcosxsin2xButton = uibutton(app.UIFigure, 'push');
+            app.sinxcosxsin2xButton.ButtonPushedFcn = createCallbackFcn(app, @sinxcosxsin2xButtonPushed, true);
+            app.sinxcosxsin2xButton.BackgroundColor = [1 1 1];
+            app.sinxcosxsin2xButton.FontWeight = 'bold';
+            app.sinxcosxsin2xButton.Position = [254 306 137 23];
+            app.sinxcosxsin2xButton.Text = '2sin(x)cos(x) = sin(2x)';
+
+            % Create sinx2pisinxButton
+            app.sinx2pisinxButton = uibutton(app.UIFigure, 'push');
+            app.sinx2pisinxButton.ButtonPushedFcn = createCallbackFcn(app, @sinx2pisinxButtonPushed, true);
+            app.sinx2pisinxButton.BackgroundColor = [1 1 1];
+            app.sinx2pisinxButton.FontWeight = 'bold';
+            app.sinx2pisinxButton.Position = [487 306 114 23];
+            app.sinx2pisinxButton.Text = 'sin(x+2pi) = sin(x)';
+
+            % Create cos2xcosx2sinx2Button
+            app.cos2xcosx2sinx2Button = uibutton(app.UIFigure, 'push');
+            app.cos2xcosx2sinx2Button.ButtonPushedFcn = createCallbackFcn(app, @cos2xcosx2sinx2ButtonPushed, true);
+            app.cos2xcosx2sinx2Button.BackgroundColor = [1 1 1];
+            app.cos2xcosx2sinx2Button.FontWeight = 'bold';
+            app.cos2xcosx2sinx2Button.Position = [9 240 167 23];
+            app.cos2xcosx2sinx2Button.Text = 'cos(2x) = cos(x)^2-sin(x)^2';
+
+            % Create cosx2picosxButton
+            app.cosx2picosxButton = uibutton(app.UIFigure, 'push');
+            app.cosx2picosxButton.ButtonPushedFcn = createCallbackFcn(app, @cosx2picosxButtonPushed, true);
+            app.cosx2picosxButton.BackgroundColor = [1 1 1];
+            app.cosx2picosxButton.FontWeight = 'bold';
+            app.cosx2picosxButton.Position = [261 239 122 23];
+            app.cosx2picosxButton.Text = 'cos(x+2pi) = cos(x)';
+
+            % Create sinpi2xcosxButton
+            app.sinpi2xcosxButton = uibutton(app.UIFigure, 'push');
+            app.sinpi2xcosxButton.ButtonPushedFcn = createCallbackFcn(app, @sinpi2xcosxButtonPushed, true);
+            app.sinpi2xcosxButton.BackgroundColor = [1 1 1];
+            app.sinpi2xcosxButton.FontWeight = 'bold';
+            app.sinpi2xcosxButton.Position = [484 240 120 23];
+            app.sinpi2xcosxButton.Text = 'sin((pi/2)-x)=cos(x)';
+
+            % Create GraphLabel
+            app.GraphLabel = uilabel(app.UIFigure);
+            app.GraphLabel.FontSize = 20;
+            app.GraphLabel.FontWeight = 'bold';
+            app.GraphLabel.FontColor = [1 1 1];
+            app.GraphLabel.Position = [291 185 64 27];
+            app.GraphLabel.Text = 'Graph';
+
+            % Show the figure after all components are created
+            app.UIFigure.Visible = 'on';
+        end
+    end
+
+    % App creation and deletion
+    methods (Access = public)
+
+        % Construct app
+        function app = lbo
+
+            % Create UIFigure and components
+            createComponents(app)
+
+            % Register the app with App Designer
+            registerApp(app, app.UIFigure)
+
+            if nargout == 0
+                clear app
+            end
+        end
+
+        % Code that executes before app deletion
+        function delete(app)
+
+            % Delete UIFigure when app is deleted
+            delete(app.UIFigure)
+        end
+    end
+end
